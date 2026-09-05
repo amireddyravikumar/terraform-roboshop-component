@@ -176,19 +176,13 @@ resource "aws_lb_listener_rule" "main" {
     }
   }
 }
-/* resource "terraform_data" "main_delete" {
+resource "terraform_data" "main_delete" {
   triggers_replace = [
     aws_instance.main.id
   ]
-  depends_on = [ aws_autoscaling_policy.catalogue ]
-  connection {
-    type     = "ssh"
-    user     = "ec2-user"
-    password = "DevOps321"
-    host     = aws_instance.catalogue.private_ip
-  }
-  # once auto scaling policy created EC2 isntance will be deleted where terraform is running 
+  depends_on = [ aws_autoscaling_policy.main ]
+  # executing where terraform running
   provisioner "local-exec" {
-    command = "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
+    command = "aws ec2 terminate-instances --instance-ids ${aws_instance.main.id}"
   }
-} */
+}
